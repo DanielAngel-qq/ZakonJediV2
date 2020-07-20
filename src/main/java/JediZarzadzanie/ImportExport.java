@@ -1,17 +1,24 @@
 package JediZarzadzanie;
 
+import javafx.stage.DirectoryChooser;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.sql.*;
 
 public class ImportExport {
 
     private static String inputNazwaString = System.inputNazwa.toString();
     private static String inputZakonString = System.inputNazwaZakon.toString();
-    static class ZarejestrujZakon implements ActionListener {
+    private static File file;
+    private static String currentline;
 
+
+    static class ZarejestrujZakon implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -39,7 +46,7 @@ public class ImportExport {
                 ResultSet data = statement.executeQuery("Select * FROM Zakon;");
 
                 while (data.next())
-                    new SQLZakon(data.getString("NazwaZakonu"),data.getString("NazwaJedi"),data.getString("Kolormiecza"),data.getInt("MocJedi"),data.getString("StronaMocy"));
+                    new SQLZakon(data.getString("NazwaZakonu"), data.getString("NazwaJedi"), data.getString("Kolormiecza"), data.getInt("MocJedi"), data.getString("StronaMocy"));
 
 
                 System.areaListaZakonyJedi.append(SQLZakon.listaZakon2.toString());
@@ -68,14 +75,14 @@ public class ImportExport {
 
                 PreparedStatement pst = connection.prepareStatement("INSERT INTO Zakon( NazwaZakonu,NazwaJedi,KolorMiecza,MocJedi,StronaMocy) VALUES ( ?,?,?,?,?)");
 
-                if (!((inputNazwaString == "") &&(inputZakonString == ""))) {
+                if (!((inputNazwaString == "") && (inputZakonString == ""))) {
                     pst.setString(1, System.inputNazwaZakon.getText());
                     pst.setString(2, System.inputNazwa.getText());
                     pst.setString(3, System.comboBox.getSelectedItem().toString());
                     pst.setInt(4, System.jMoc.getValue());
                     pst.setString(5, System.group.getSelection().getActionCommand());
                     pst.executeUpdate();
-                }else
+                } else
                     java.lang.System.out.println("nie mozna");
 
                 java.lang.System.out.println(pst);
@@ -118,6 +125,7 @@ public class ImportExport {
 
         }
     }
+
     static class SQLJediExport implements ActionListener {
 
         @Override
@@ -133,10 +141,9 @@ public class ImportExport {
 
                 pst.setString(1, System.inputNazwa.getText());
                 pst.setInt(2, System.comboBox.getSelectedIndex());
-                pst.setInt(3,System.jMoc.getValue());
-                pst.setString(4,System.group.getSelection().getActionCommand());
+                pst.setInt(3, System.jMoc.getValue());
+                pst.setString(4, System.group.getSelection().getActionCommand());
                 pst.executeUpdate();
-
 
 
             } catch (Exception x) {
@@ -145,7 +152,8 @@ public class ImportExport {
 
         }
     }
-    static class JediImportPlik implements ActionListener{
+
+    static class JediImportPlik implements ActionListener {
 
 
         @Override
@@ -154,7 +162,8 @@ public class ImportExport {
             Jedi.odczytZPliku();
         }
     }
-    static class JediExportPlik implements ActionListener{
+
+    static class JediExportPlik implements ActionListener {
 
 
         @Override
@@ -163,24 +172,32 @@ public class ImportExport {
             Jedi.zapisDoPliku();
 
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        static class ImportZakonPlik implements ActionListener {
+    static class ImportZakonPlik implements ActionListener {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooserZakony = new JFileChooser();
-                fileChooserZakony.setCurrentDirectory(new File("//Users//danny//IdeaProjects//"));
-                fileChooserZakony.setDialogTitle("Wybierz Plik Zakonu");
-                //fileChooserZakony.setFileSelectionMode(JFileChooser.Te);
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileChooserZakony = new JFileChooser();
+            fileChooserZakony.setCurrentDirectory(new File("//Users//danny//IdeaProjects//"));
+            fileChooserZakony.setDialogTitle("Wybierz Plik Zakonu");
+            int result = fileChooserZakony.showSaveDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                file = fileChooserZakony.getSelectedFile();
+            }
+            try {
+                BufferedReader br = new BufferedReader((new FileReader(file)));
 
-                if (fileChooserZakony.showOpenDialog(System.JIZakon)== JFileChooser.APPROVE_OPTION);
+                while ((currentline = br.readLine()) != null) {
+                    java.lang.System.out.println(currentline);
+                }
 
-                Zakon.odczytZPlikuZakon();
-
+            } catch (Exception error) {
+                error.printStackTrace();
             }
         }
     }
-
-
 }
+
+

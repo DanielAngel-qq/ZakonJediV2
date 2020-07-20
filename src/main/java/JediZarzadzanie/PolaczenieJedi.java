@@ -25,8 +25,8 @@ public class PolaczenieJedi {
     @Override
     public String toString() {
         return "PolaczenieJedi{" +
-                "nazwaZakon='" + nazwaZakon + '\'' +
-                ", zaznacone='" + zaznacone + '\'' +
+                "Zakon='" + nazwaZakon + '\'' +
+                ", ='" + zaznacone + '\'' +
                 '}';
     }
 }

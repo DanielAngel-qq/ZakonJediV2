@@ -9,7 +9,7 @@ public class Jedi implements Serializable {
     private String kolorMiecza;
     private int mocJedi;
     private String stronaMocy;
-    public static HashMap<String, Jedi> listaJedi = new HashMap<>();
+    public static HashMap<String, Jedi> listaJedi = new HashMap<String, Jedi>();
 
     public Jedi(String nazwaJedi, String kolorMiecza, int mocJedi, String stronaMocy) {
         if (!(listaJedi.containsKey(nazwaJedi))) {

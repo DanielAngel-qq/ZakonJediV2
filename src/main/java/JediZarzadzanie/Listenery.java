@@ -7,15 +7,18 @@ import java.util.HashMap;
 
 public class Listenery {
 
-    private static HashMap <String,Jedi> tymlist = new HashMap<>();
+    private static HashMap <String,Jedi> tymlist = new HashMap<String, Jedi>();
     private static DefaultListModel<Jedi> tymlist1 = new DefaultListModel();
     private static DefaultListModel<PolaczenieJedi> listaPol = new DefaultListModel<>();
+    private static DefaultListModel<String> zeruj = new DefaultListModel<>();
 
     static class WyczyscZakon implements ActionListener {
+
 
         @Override
         public void actionPerformed(ActionEvent e) {
             System.inputNazwaZakon.setText(" ");
+            System.bezZakonu.setModel(zeruj);
 
         }
     }
@@ -48,8 +51,11 @@ public class Listenery {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            listaPol.addElement(new PolaczenieJedi(System.inputNazwaZakon.toString(),System.bezZakonu.getSelectedValue().toString()));
+            listaPol.addElement(new PolaczenieJedi(System.inputNazwaZakon.getText(),System.bezZakonu.getSelectedValue().toString()));
             java.lang.System.out.println(listaPol);
+            System.areaListaZakonyJedi.append(listaPol.toString());
+
+            listaPol.clear();
 
 
         }

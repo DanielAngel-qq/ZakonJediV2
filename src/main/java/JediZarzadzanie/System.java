@@ -138,8 +138,8 @@ public class System extends JPanel  {
         add(bezZakonu);
 
         JIZakon = new JButton("Import");
-        //JIZakon.addActionListener(new Listenery.ImportZakonPlik());
-        JIZakon.addActionListener(new ImportExport.SQLZakonImport());
+        JIZakon.addActionListener(new ImportExport.ImportZakonPlik());
+        //JIZakon.addActionListener(new ImportExport.SQLZakonImport());
         JIZakon.setBounds(20,540,100,20);
         add(JIZakon);
 

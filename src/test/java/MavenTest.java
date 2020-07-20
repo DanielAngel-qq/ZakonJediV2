@@ -1,6 +1,4 @@
-import JediZarzadzanie.ImportExport;
-import JediZarzadzanie.Jedi;
-import JediZarzadzanie.Listenery;
+import JediZarzadzanie.*;
 import JediZarzadzanie.System;
 import org.junit.Test;
 
@@ -13,6 +11,8 @@ public class MavenTest {
 
     @Test
     public void TestNieMamJuzSily (){
+
+        //Jedi.odczytZPliku();
 
 
 
